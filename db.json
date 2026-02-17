@@ -1,0 +1,54 @@
+{
+  "applications": [
+    {
+      "id": "1",
+      "position": "Frontend Developer",
+      "company": "TechStream",
+      "url": "https://techstream.io/careers/frontend",
+      "applicationDate": "2023-10-15",
+      "applicationStatus": "Applied",
+      "notes": "Used a custom cover letter highlighting my React projects from Full Stack Open.",
+      "source": "LinkedIn"
+    },
+    {
+      "id": "2",
+      "position": "Junior Full Stack Engineer",
+      "company": "CloudScale",
+      "url": "https://cloudscale.com/jobs/junior-stack",
+      "applicationDate": "2023-10-18",
+      "applicationStatus": "Interviewing",
+      "notes": "HR screening completed. Technical interview scheduled for next Tuesday.",
+      "source": "Indeed"
+    },
+    {
+      "id": "3",
+      "position": "React Developer",
+      "company": "PixelPerfect",
+      "url": "https://pixelperfect.agency/work-with-us",
+      "applicationDate": "2023-10-20",
+      "applicationStatus": "Rejected",
+      "notes": "Standard rejection. Might be worth reaching out to the recruiter in 6 months.",
+      "source": "Company Website"
+    },
+    {
+      "id": "4",
+      "position": "Software Engineer Intern",
+      "company": "Global Systems",
+      "url": "https://globalsystems.biz/internships",
+      "applicationDate": "2023-10-22",
+      "applicationStatus": "Applied",
+      "notes": "Referral from a friend in the DevOps department.",
+      "source": "Networking"
+    },
+    {
+      "id": "5",
+      "position": "Web Developer",
+      "company": "StartupFlow",
+      "url": "https://startupflow.co/apply",
+      "applicationDate": "2023-10-25",
+      "applicationStatus": "Offer",
+      "notes": "Received a verbal offer! Waiting for the written contract to review benefits.",
+      "source": "Wellfound"
+    }
+  ]
+}
