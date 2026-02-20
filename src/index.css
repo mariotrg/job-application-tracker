@@ -5,6 +5,17 @@
   box-sizing: border-box;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+html,
+body {
+  height: 100%;
+}
+
 html {
   font-size: 62.5%;
 }
@@ -38,8 +49,14 @@ a {
 }
 
 /* APP */
-#root {
+header {
+  padding: 5px 10px;
+}
+
+main {
+  flex-grow: 1;
   padding: 10px;
+  position: relative;
 }
 .application_list {
   display: flex;
@@ -55,4 +72,79 @@ a {
 button {
   border: 1px solid black;
   padding: 5px;
+}
+
+nav {
+  position: sticky;
+  bottom: 0;
+  background-color: white;
+  width: 100%;
+  padding: 15px;
+  border-top: 1px solid black;
+}
+
+nav ul {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.add_new_button {
+  border-radius: 50%;
+  height: 48px;
+  width: 48px;
+  font-size: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  background-color: rgb(49, 49, 49);
+  color: white;
+}
+
+/* =========== */
+.form_container {
+  position: fixed;
+  bottom: 0;
+  height: 90%;
+  overflow: scroll;
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+  border-radius: 30px 30px 0 0;
+  padding: 20px;
+  transition: all 300ms;
+  box-shadow: -1px -8px 6px -6px rgba(0, 0, 0, 0.33);
+  -webkit-box-shadow: -1px -8px 6px -6px rgba(0, 0, 0, 0.33);
+  -moz-box-shadow: -1px -8px 6px -6px rgba(0, 0, 0, 0.33);
+}
+
+.form_top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form_top button {
+  border: none;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow: scroll;
+}
+
+.form div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form input {
+  font-size: 14px;
+  padding: 10px;
 }
