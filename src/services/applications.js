@@ -16,4 +16,9 @@ const updateApplication = (id, updatedApplication) => {
   return request.then((response) => response.data);
 };
 
-export default { getAll, deleteApplication, updateApplication };
+const addNew = (newApplication) => {
+  const request = axios.post(baseUrl, newApplication);
+  return request.then((response) => response.data);
+};
+
+export default { getAll, deleteApplication, updateApplication, addNew };
