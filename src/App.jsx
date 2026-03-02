@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+import Form from "./components/Form";
+
 const App = () => {
   const [applications, setApplications] = useState([]);
   const [newApplication, setNewApplication] = useState({
@@ -32,72 +34,24 @@ const App = () => {
         setApplications(applications.concat(response.data));
         console.log(response.data);
       });
+    setNewApplication({
+      position: "",
+      company: "",
+      url: "",
+      applicationDate: "",
+      applicationStatus: "",
+      notes: "",
+      source: "",
+    });
   };
 
   return (
     <>
-      <form action="" onSubmit={addNewApplication}>
-        <div>
-          <label htmlFor="position">position</label>
-          <input
-            type="text"
-            name="position"
-            id=""
-            onChange={handleInputChange}
-            value={newApplication.position}
-          />
-        </div>
-        <div>
-          <label htmlFor="company">company</label>
-          <input
-            type="text"
-            name="company"
-            id=""
-            onChange={handleInputChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="url">url</label>
-          <input type="text" name="url" id="" onChange={handleInputChange} />
-        </div>
-        <div>
-          <label htmlFor="applicationDate">date</label>
-          <input
-            type="date"
-            name="applicationDate"
-            id=""
-            onChange={handleInputChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="applicationStatus">status</label>
-          <select
-            name="applicationStatus"
-            id=""
-            defaultValue="applied"
-            onChange={handleInputChange}
-          >
-            <option value="applied">applied</option>
-            <option value="whishlist">whishlist</option>
-            <option value="interviewing">interviewing</option>
-            <option value="rejected">rejected</option>
-            <option value="offer">offer</option>
-            <option value="withdrawn">withdrawn</option>
-          </select>
-        </div>
-        <div>
-          <label htmlFor="source">source</label>
-          <input type="text" name="source" id="" onChange={handleInputChange} />
-        </div>
-        <div>
-          <label htmlFor="notes" onChange={handleInputChange}>
-            notes
-          </label>
-          <textarea name="notes" id="" onChange={handleInputChange}></textarea>
-        </div>
-
-        <button>add new application</button>
-      </form>
+      <Form
+        onSubmit={addNewApplication}
+        onChange={handleInputChange}
+        newApplication={newApplication}
+      />
 
       <div>
         {applications.map((item) => (
