@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 
 import Applications from "./services/applications";
 
+import Button from "./components/Button";
 import Form from "./components/Form";
 
 const App = () => {
@@ -16,6 +16,7 @@ const App = () => {
     notes: "",
     source: "",
   });
+  const [view, setView] = useState("home");
 
   const handleInputChange = (e) => {
     setNewApplication({ ...newApplication, [e.target.name]: e.target.value });
@@ -45,19 +46,47 @@ const App = () => {
     });
   };
 
+  const handleView = (view) => {
+    setView(view);
+  };
+
   return (
     <>
-      <Form
-        onSubmit={addNewApplication}
-        onChange={handleInputChange}
-        newApplication={newApplication}
-      />
+      <nav>
+        <ul>
+          <li>
+            <Button text="dashboard" onClick={() => handleView("home")} />
+          </li>
+          <li>
+            <Button text="list" onClick={() => handleView("list")} />
+          </li>
+          <li>
+            <Button text="form" onClick={() => handleView("form")} />
+          </li>
+        </ul>
+      </nav>
 
-      <div>
-        {applications.map((item) => (
-          <p key={item.id}>{item.position}</p>
-        ))}
-      </div>
+      {view === "home" && (
+        <>
+          <h1>JobTracker</h1>
+        </>
+      )}
+
+      {view === "form" && (
+        <Form
+          onSubmit={addNewApplication}
+          onChange={handleInputChange}
+          newApplication={newApplication}
+        />
+      )}
+
+      {view === "list" && (
+        <div>
+          {applications.map((item) => (
+            <p key={item.id}>{item.position}</p>
+          ))}
+        </div>
+      )}
     </>
   );
 };
