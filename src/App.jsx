@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+import Applications from "./services/applications";
+
 import Form from "./components/Form";
 
 const App = () => {
@@ -20,20 +22,18 @@ const App = () => {
   };
 
   useEffect(() => {
-    axios.get("http://localhost:3001/applications").then((response) => {
-      setApplications(response.data);
+    Applications.getAll().then((allApplications) => {
+      setApplications(allApplications);
     });
   }, []);
 
   const addNewApplication = (e) => {
     e.preventDefault();
 
-    axios
-      .post("http://localhost:3001/applications", newApplication)
-      .then((response) => {
-        setApplications(applications.concat(response.data));
-        console.log(response.data);
-      });
+    Applications.addNew(newApplication).then((returnedApplication) => {
+      setApplications(applications.concat(returnedApplication));
+    });
+
     setNewApplication({
       position: "",
       company: "",
