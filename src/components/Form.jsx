@@ -1,6 +1,6 @@
 import Button from "./Button";
 
-const Form = ({ onSubmit, onChange, newApplication }) => {
+const Form = ({ onSubmit, onChange, newApplication, statusList }) => {
   return (
     <form action="" onSubmit={onSubmit}>
       <div>
@@ -47,16 +47,16 @@ const Form = ({ onSubmit, onChange, newApplication }) => {
         <label htmlFor="applicationStatus">status</label>
         <select
           name="applicationStatus"
-          id=""
           onChange={onChange}
-          defaultValue="applied"
+          defaultValue="Applied"
         >
-          <option value="applied">applied</option>
-          <option value="wishlist">whishlist</option>
-          <option value="interviewing">interviewing</option>
-          <option value="rejected">rejected</option>
-          <option value="offer">offer</option>
-          <option value="withdrawn">withdrawn</option>
+          {statusList.map((status, id) => {
+            return (
+              <option key={id} value={status}>
+                {status}
+              </option>
+            );
+          })}
         </select>
       </div>
       <div>

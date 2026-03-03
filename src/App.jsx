@@ -20,6 +20,14 @@ const App = () => {
   const [view, setView] = useState("list");
   const [selectedApplication, setSelectedApplication] = useState(null);
 
+  const statusList = [
+    "Applied",
+    "Interviewing",
+    "Offer",
+    "Rejected",
+    "Withdrawn",
+  ];
+
   const handleInputChange = (e) => {
     setNewApplication({ ...newApplication, [e.target.name]: e.target.value });
   };
@@ -94,6 +102,7 @@ const App = () => {
           onSubmit={addNewApplication}
           onChange={handleInputChange}
           newApplication={newApplication}
+          statusList={statusList}
         />
       )}
 
@@ -120,6 +129,8 @@ const App = () => {
             (setSelectedApplication(null), setView("list"));
           }}
           onDelete={deleteApplication}
+          statusList={statusList}
+          onChange={handleInputChange}
         />
       )}
     </>
