@@ -1,4 +1,5 @@
 import Button from "./Button";
+import Select from "./Select";
 
 const Form = ({ onSubmit, onChange, newApplication, statusList }) => {
   return (
@@ -45,19 +46,11 @@ const Form = ({ onSubmit, onChange, newApplication, statusList }) => {
       </div>
       <div>
         <label htmlFor="applicationStatus">status</label>
-        <select
-          name="applicationStatus"
+        <Select
           onChange={onChange}
           defaultValue="Applied"
-        >
-          {statusList.map((status, id) => {
-            return (
-              <option key={id} value={status}>
-                {status}
-              </option>
-            );
-          })}
-        </select>
+          statusList={statusList}
+        />
       </div>
       <div>
         <label htmlFor="source">source</label>
