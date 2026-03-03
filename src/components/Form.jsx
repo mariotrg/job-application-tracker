@@ -63,9 +63,7 @@ const Form = ({ onSubmit, onChange, newApplication, statusList }) => {
         />
       </div>
       <div>
-        <label htmlFor="notes" onChange={onChange}>
-          notes
-        </label>
+        <label htmlFor="notes">notes</label>
         <textarea
           name="notes"
           id=""
