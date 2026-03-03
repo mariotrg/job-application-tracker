@@ -1,3 +1,5 @@
+import Button from "./Button";
+
 const Form = ({ onSubmit, onChange, newApplication }) => {
   return (
     <form action="" onSubmit={onSubmit}>
@@ -79,7 +81,7 @@ const Form = ({ onSubmit, onChange, newApplication }) => {
         ></textarea>
       </div>
 
-      <button>add new application</button>
+      <Button text="add new application" />
     </form>
   );
 };
