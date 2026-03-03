@@ -4,19 +4,7 @@ import Applications from "./services/applications";
 
 import Button from "./components/Button";
 import Form from "./components/Form";
-
-const ApplicationView = ({ selected, onBack }) => {
-  return (
-    <div>
-      <Button text="back" onClick={onBack} />
-      <p>{selected.position}</p>
-      <p>{selected.company}</p>
-      <p>{selected.url}</p>
-      <p>{selected.applicationStatus}</p>
-      <p>{selected.applicationDate}</p>
-    </div>
-  );
-};
+import ApplicationView from "./components/ApplicationView";
 
 const App = () => {
   const [applications, setApplications] = useState([]);
