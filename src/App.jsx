@@ -19,6 +19,7 @@ const App = () => {
   });
   const [view, setView] = useState("list");
   const [selectedApplication, setSelectedApplication] = useState(null);
+  const [newStatus, setNewStatus] = useState(null);
 
   const statusList = [
     "Applied",
@@ -28,9 +29,9 @@ const App = () => {
     "Withdrawn",
   ];
 
-  const handleInputChange = (e) => {
-    setNewApplication({ ...newApplication, [e.target.name]: e.target.value });
-  };
+  const currentApplication = applications.find(
+    (application) => application.id === selectedApplication || null,
+  );
 
   useEffect(() => {
     Applications.getAll().then((allApplications) => {
@@ -56,14 +57,6 @@ const App = () => {
     });
   };
 
-  const handleView = (view) => {
-    setView(view);
-  };
-
-  const handleClick = (e) => {
-    setSelectedApplication(e);
-  };
-
   const deleteApplication = (id) => {
     if (window.confirm("do you want to delete this application?")) {
       Applications.deleteApplication(id).then(() => {
@@ -73,6 +66,37 @@ const App = () => {
       });
       setView("list");
     }
+  };
+
+  const updateApplication = (application, id) => {
+    const updatedApplication = {
+      ...application,
+      applicationStatus: newStatus,
+    };
+
+    Applications.updateApplication(id, updatedApplication).then(() => {
+      setApplications(
+        applications.map((application) =>
+          application.id === id ? updatedApplication : application,
+        ),
+      );
+    });
+  };
+
+  const handleView = (view) => {
+    setView(view);
+  };
+
+  const handleClick = (e) => {
+    setSelectedApplication(e.id);
+  };
+
+  const handleInputChange = (e) => {
+    setNewApplication({ ...newApplication, [e.target.name]: e.target.value });
+  };
+
+  const handleStatusChange = (e) => {
+    setNewStatus(e.target.value);
   };
 
   return (
@@ -124,13 +148,14 @@ const App = () => {
 
       {view === "view" && (
         <ApplicationView
-          selected={selectedApplication}
+          selected={currentApplication}
           onBack={() => {
             (setSelectedApplication(null), setView("list"));
           }}
           onDelete={deleteApplication}
           statusList={statusList}
-          onChange={handleInputChange}
+          onChange={handleStatusChange}
+          onUpdate={updateApplication}
         />
       )}
     </>

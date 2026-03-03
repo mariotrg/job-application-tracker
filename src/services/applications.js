@@ -16,4 +16,9 @@ const deleteApplication = (id) => {
   return request.then((response) => response.data);
 };
 
-export default { getAll, addNew, deleteApplication };
+const updateApplication = (id, updatedApplication) => {
+  const request = axios.put(`${baseUrl}/${id}`, updatedApplication);
+  return request.then((response) => response.data);
+};
+
+export default { getAll, addNew, deleteApplication, updateApplication };
