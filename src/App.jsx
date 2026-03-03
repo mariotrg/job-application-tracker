@@ -5,6 +5,19 @@ import Applications from "./services/applications";
 import Button from "./components/Button";
 import Form from "./components/Form";
 
+const ApplicationView = ({ selected, onBack }) => {
+  return (
+    <div>
+      <Button text="back" onClick={onBack} />
+      <p>{selected.position}</p>
+      <p>{selected.company}</p>
+      <p>{selected.url}</p>
+      <p>{selected.applicationStatus}</p>
+      <p>{selected.applicationDate}</p>
+    </div>
+  );
+};
+
 const App = () => {
   const [applications, setApplications] = useState([]);
   const [newApplication, setNewApplication] = useState({
@@ -17,6 +30,7 @@ const App = () => {
     source: "",
   });
   const [view, setView] = useState("home");
+  const [selectedApplication, setSelectedApplication] = useState(null);
 
   const handleInputChange = (e) => {
     setNewApplication({ ...newApplication, [e.target.name]: e.target.value });
@@ -48,6 +62,10 @@ const App = () => {
 
   const handleView = (view) => {
     setView(view);
+  };
+
+  const handleClick = (e) => {
+    setSelectedApplication(e);
   };
 
   return (
@@ -83,9 +101,26 @@ const App = () => {
       {view === "list" && (
         <div>
           {applications.map((item) => (
-            <p key={item.id}>{item.position}</p>
+            <div key={item.id}>
+              <span key={item.id}>{item.position}</span> {""}
+              <Button
+                text="view more"
+                onClick={() => {
+                  (handleView("view"), handleClick(item));
+                }}
+              />
+            </div>
           ))}
         </div>
+      )}
+
+      {view === "view" && (
+        <ApplicationView
+          selected={selectedApplication}
+          onBack={() => {
+            (setSelectedApplication(null), setView("list"));
+          }}
+        />
       )}
     </>
   );
