@@ -1,6 +1,6 @@
 import Button from "./Button";
 
-const ApplicationView = ({ selected, onBack }) => {
+const ApplicationView = ({ selected, onBack, onDelete }) => {
   return (
     <div>
       <Button text="back" onClick={onBack} />
@@ -9,6 +9,8 @@ const ApplicationView = ({ selected, onBack }) => {
       <p>{selected.url}</p>
       <p>{selected.applicationStatus}</p>
       <p>{selected.applicationDate}</p>
+
+      <Button text="delete" onClick={() => onDelete(selected.id)} />
     </div>
   );
 };

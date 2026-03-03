@@ -17,7 +17,7 @@ const App = () => {
     notes: "",
     source: "",
   });
-  const [view, setView] = useState("home");
+  const [view, setView] = useState("list");
   const [selectedApplication, setSelectedApplication] = useState(null);
 
   const handleInputChange = (e) => {
@@ -54,6 +54,17 @@ const App = () => {
 
   const handleClick = (e) => {
     setSelectedApplication(e);
+  };
+
+  const deleteApplication = (id) => {
+    if (window.confirm("do you want to delete this application?")) {
+      Applications.deleteApplication(id).then(() => {
+        setApplications(
+          applications.filter((application) => application.id !== id),
+        );
+      });
+      setView("list");
+    }
   };
 
   return (
@@ -108,6 +119,7 @@ const App = () => {
           onBack={() => {
             (setSelectedApplication(null), setView("list"));
           }}
+          onDelete={deleteApplication}
         />
       )}
     </>
