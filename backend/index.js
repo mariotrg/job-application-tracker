@@ -4,17 +4,25 @@ const Application = require("./models/application");
 
 const app = express();
 
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message);
+
+  next(error);
+};
+
 app.use(express.static("dist"));
 app.use(express.json());
 
 app.get("/api/applications", (request, response) => {
-  Application.find({}).then((applications) => response.json(applications));
+  Application.find({})
+    .then((applications) => response.json(applications))
+    .catch((error) => next(error));
 });
 
 app.get("/api/applications/:id", (request, response) => {
-  Application.findById(request.params.id).then((application) =>
-    response.json(application),
-  );
+  Application.findById(request.params.id)
+    .then((application) => response.json(application))
+    .catch((error) => next(error));
 });
 
 app.post("/api/applications", (request, response) => {
@@ -32,30 +40,37 @@ app.post("/api/applications", (request, response) => {
 
   application
     .save()
-    .then((savedApplication) => response.json(savedApplication));
+    .then((savedApplication) => response.json(savedApplication))
+    .catch((error) => next(error));
 });
 
 app.put("/api/applications/:id", (request, response) => {
   const { applicationStatus } = request.body;
 
-  Application.findById(request.params.id).then((application) => {
-    if (!application) {
-      return response.status(404).end();
-    }
+  Application.findById(request.params.id)
+    .then((application) => {
+      if (!application) {
+        return response.status(404).end();
+      }
 
-    application.applicationStatus = applicationStatus;
+      application.applicationStatus = applicationStatus;
 
-    return application.save().then((updatedApplication) => {
-      response.json(updatedApplication);
-    });
-  });
+      return application.save().then((updatedApplication) => {
+        response.json(updatedApplication);
+      });
+    })
+    .catch((error) => next(error));
 });
 
 app.delete("/api/applications/:id", (request, response) => {
-  Application.findByIdAndDelete(request.params.id).then(() => {
-    response.status(204).end();
-  });
+  Application.findByIdAndDelete(request.params.id)
+    .then(() => {
+      response.status(204).end();
+    })
+    .catch((error) => next(error));
 });
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

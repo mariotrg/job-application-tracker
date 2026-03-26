@@ -34,17 +34,21 @@ const App = () => {
   );
 
   useEffect(() => {
-    Applications.getAll().then((allApplications) => {
-      setApplications(allApplications);
-    });
+    Applications.getAll()
+      .then((allApplications) => {
+        setApplications(allApplications);
+      })
+      .catch((error) => console.log(error.response.data.error));
   }, []);
 
   const addNewApplication = (e) => {
     e.preventDefault();
 
-    Applications.addNew(newApplication).then((returnedApplication) => {
-      setApplications(applications.concat(returnedApplication));
-    });
+    Applications.addNew(newApplication)
+      .then((returnedApplication) => {
+        setApplications(applications.concat(returnedApplication));
+      })
+      .catch((error) => console.log(error.response.data.error));
 
     setNewApplication({
       position: "",
@@ -59,11 +63,13 @@ const App = () => {
 
   const deleteApplication = (id) => {
     if (window.confirm("do you want to delete this application?")) {
-      Applications.deleteApplication(id).then(() => {
-        setApplications(
-          applications.filter((application) => application.id !== id),
-        );
-      });
+      Applications.deleteApplication(id)
+        .then(() => {
+          setApplications(
+            applications.filter((application) => application.id !== id),
+          );
+        })
+        .catch((error) => console.log(error.response.data.error));
       setView("list");
     }
   };
@@ -74,13 +80,15 @@ const App = () => {
       applicationStatus: newStatus,
     };
 
-    Applications.updateApplication(id, updatedApplication).then(() => {
-      setApplications(
-        applications.map((application) =>
-          application.id === id ? updatedApplication : application,
-        ),
-      );
-    });
+    Applications.updateApplication(id, updatedApplication)
+      .then(() => {
+        setApplications(
+          applications.map((application) =>
+            application.id === id ? updatedApplication : application,
+          ),
+        );
+      })
+      .catch((error) => console.log(error.response.data.error));
   };
 
   const handleView = (view) => {
