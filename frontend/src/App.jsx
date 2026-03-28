@@ -49,7 +49,7 @@ const App = () => {
   const addNewApplication = (e) => {
     e.preventDefault();
 
-    Applications.addNew(newApplication)
+    Applications.add(newApplication)
       .then((returnedApplication) => {
         setApplications(applications.concat(returnedApplication));
         setView("list");
@@ -76,7 +76,7 @@ const App = () => {
 
   const deleteApplication = (id) => {
     if (window.confirm("do you want to delete this application?")) {
-      Applications.deleteApplication(id)
+      Applications.delete(id)
         .then(() => {
           setApplications(
             applications.filter((application) => application.id !== id),

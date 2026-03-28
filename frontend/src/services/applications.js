@@ -6,19 +6,19 @@ const getAll = () => {
   return request.then((response) => response.data);
 };
 
-const addNew = (newApplication) => {
+const add = (newApplication) => {
   const request = axios.post(baseUrl, newApplication);
   return request.then((response) => response.data);
 };
 
-const deleteApplication = (id) => {
+const remove = (id) => {
   const request = axios.delete(`${baseUrl}/${id}`);
   return request.then((response) => response.data);
 };
 
-const updateApplication = (id, updatedApplication) => {
+const update = (id, updatedApplication) => {
   const request = axios.put(`${baseUrl}/${id}`, updatedApplication);
   return request.then((response) => response.data);
 };
 
-export default { getAll, addNew, deleteApplication, updateApplication };
+export default { getAll, add, remove, update };
