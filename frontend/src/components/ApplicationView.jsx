@@ -1,29 +1,39 @@
 import Button from "./Button";
 import Select from "./Select";
+import Notification from "./Notification";
 
 const ApplicationView = ({
   selected,
   onBack,
   onDelete,
-  onChange,
+  onClick,
   statusList,
-  onUpdate,
+  message,
+  notificationStatus,
 }) => {
   return (
     <div>
-      <Button text="back" onClick={onBack} />
+      <div>
+        <Button text="back" onClick={onBack} />
+        <Button text="delete" onClick={() => onDelete(selected.id)} />{" "}
+      </div>
+      <Notification message={message} notificationStatus={notificationStatus} />
       <p>{selected.position}</p>
       <p>{selected.company}</p>
       <p>{selected.url}</p>
-      <Select
-        statusList={statusList}
-        defaultValue={selected.applicationStatus}
-        onChange={(e) => onChange(e)}
-      />
+      <div>
+        {statusList.map((status, id) => {
+          return (
+            <Button
+              key={id}
+              text={status}
+              onClick={() => onClick(selected, selected.id, status)}
+            />
+          );
+        })}
+      </div>
       <p>{selected.applicationDate}</p>
       <p>{selected.applicationStatus}</p>
-      <Button text="delete" onClick={() => onDelete(selected.id)} />{" "}
-      <Button text="update" onClick={() => onUpdate(selected, selected.id)} />
     </div>
   );
 };

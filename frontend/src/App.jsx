@@ -2,9 +2,12 @@ import { useState, useEffect } from "react";
 
 import Applications from "./services/applications";
 
+import "./index.css";
+
 import Button from "./components/Button";
 import Form from "./components/Form";
 import ApplicationView from "./components/ApplicationView";
+import Notification from "./components/Notification";
 
 const App = () => {
   const [applications, setApplications] = useState([]);
@@ -19,7 +22,8 @@ const App = () => {
   });
   const [view, setView] = useState("list");
   const [selectedApplication, setSelectedApplication] = useState(null);
-  const [newStatus, setNewStatus] = useState(null);
+  const [message, setMessage] = useState(null);
+  const [notificationStatus, setNotificationStatus] = useState(null);
 
   const statusList = [
     "Applied",
@@ -27,6 +31,7 @@ const App = () => {
     "Offer",
     "Rejected",
     "Withdrawn",
+    "No response",
   ];
 
   const currentApplication = applications.find(
@@ -47,6 +52,14 @@ const App = () => {
     Applications.addNew(newApplication)
       .then((returnedApplication) => {
         setApplications(applications.concat(returnedApplication));
+        setView("list");
+        setNotificationStatus("new");
+        setMessage("new job application added");
+
+        setTimeout(() => {
+          setMessage(null);
+          setNotificationStatus(null);
+        }, 3000);
       })
       .catch((error) => console.log(error.response.data.error));
 
@@ -68,25 +81,37 @@ const App = () => {
           setApplications(
             applications.filter((application) => application.id !== id),
           );
+          setMessage("application deleted");
+          setNotificationStatus("delete");
+          setTimeout(() => {
+            setMessage(null);
+            setNotificationStatus(null);
+          }, 3000);
         })
         .catch((error) => console.log(error.response.data.error));
       setView("list");
     }
   };
 
-  const updateApplication = (application, id) => {
+  const updateApplication = (application, id, status) => {
     const updatedApplication = {
       ...application,
-      applicationStatus: newStatus,
+      applicationStatus: status,
     };
 
-    Applications.updateApplication(id, updatedApplication)
+    Applications.update(id, updatedApplication)
       .then(() => {
         setApplications(
           applications.map((application) =>
             application.id === id ? updatedApplication : application,
           ),
         );
+        setMessage("application status updated");
+        setNotificationStatus("update");
+        setTimeout(() => {
+          setMessage(null);
+          setNotificationStatus(null);
+        }, 3000);
       })
       .catch((error) => console.log(error.response.data.error));
   };
@@ -103,69 +128,74 @@ const App = () => {
     setNewApplication({ ...newApplication, [e.target.name]: e.target.value });
   };
 
-  const handleStatusChange = (e) => {
-    setNewStatus(e.target.value);
-  };
-
   return (
     <>
-      <nav>
-        <ul>
-          <li>
-            <Button text="dashboard" onClick={() => handleView("home")} />
-          </li>
-          <li>
-            <Button text="list" onClick={() => handleView("list")} />
-          </li>
-          <li>
-            <Button text="form" onClick={() => handleView("form")} />
-          </li>
-        </ul>
-      </nav>
+      <aside>
+        <nav className="navigation">
+          <ul>
+            <li>
+              <Button text="dashboard" onClick={() => handleView("home")} />
+            </li>
+            <li>
+              <Button text="list" onClick={() => handleView("list")} />
+            </li>
+            <li>
+              <Button text="form" onClick={() => handleView("form")} />
+            </li>
+          </ul>
+        </nav>
+      </aside>
 
-      {view === "home" && (
-        <>
-          <h1>JobTracker</h1>
-        </>
-      )}
+      <main>
+        {view === "home" && (
+          <>
+            <h1>JobTracker</h1>
+          </>
+        )}
 
-      {view === "form" && (
-        <Form
-          onSubmit={addNewApplication}
-          onChange={handleInputChange}
-          newApplication={newApplication}
-          statusList={statusList}
-        />
-      )}
+        {view === "form" && (
+          <Form
+            onSubmit={addNewApplication}
+            onChange={handleInputChange}
+            newApplication={newApplication}
+            statusList={statusList}
+          />
+        )}
 
-      {view === "list" && (
-        <div>
-          {applications.map((item) => (
-            <div key={item.id}>
-              <span key={item.id}>{item.position}</span> {""}
-              <Button
-                text="view more"
-                onClick={() => {
-                  (handleView("view"), handleClick(item));
-                }}
-              />
-            </div>
-          ))}
-        </div>
-      )}
+        {view === "list" && (
+          <div>
+            <Notification
+              message={message}
+              notificationStatus={notificationStatus}
+            />
+            {applications.map((item) => (
+              <div key={item.id}>
+                <span key={item.id}>{item.position}</span> {""}
+                <Button
+                  text="view more"
+                  onClick={() => {
+                    (handleView("view"), handleClick(item));
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+        )}
 
-      {view === "view" && (
-        <ApplicationView
-          selected={currentApplication}
-          onBack={() => {
-            (setSelectedApplication(null), setView("list"));
-          }}
-          onDelete={deleteApplication}
-          statusList={statusList}
-          onChange={handleStatusChange}
-          onUpdate={updateApplication}
-        />
-      )}
+        {view === "view" && (
+          <ApplicationView
+            selected={currentApplication}
+            onBack={() => {
+              (setSelectedApplication(null), setView("list"));
+            }}
+            onDelete={deleteApplication}
+            statusList={statusList}
+            onClick={updateApplication}
+            message={message}
+            notificationStatus={notificationStatus}
+          />
+        )}
+      </main>
     </>
   );
 };
