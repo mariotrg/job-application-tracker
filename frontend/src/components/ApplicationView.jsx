@@ -1,5 +1,4 @@
 import Button from "./Button";
-import Select from "./Select";
 import Notification from "./Notification";
 
 const ApplicationView = ({
