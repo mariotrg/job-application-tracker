@@ -1,0 +1,86 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+ul {
+  list-style: none;
+}
+
+#root {
+  display: flex;
+  height: 100%;
+}
+
+main {
+  padding: 20px;
+  height: 100%;
+}
+
+aside {
+  padding: 20px;
+  height: 100%;
+}
+
+button {
+  cursor: pointer;
+}
+
+.notification {
+  padding: 10px;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+ul button {
+  padding: 10px;
+  background: none;
+  border: 1px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+ul button:hover {
+  background-color: rgb(235, 248, 255);
+}
+
+.notification_new {
+  background-color: rgb(219, 219, 255);
+  color: blue;
+}
+
+.notification_update {
+  background-color: rgb(209, 255, 209);
+  color: green;
+}
+
+.notification_delete {
+  background-color: rgb(255, 194, 194);
+  color: red;
+}
+
+.status_button {
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-size: 14px;
+  background-color: rgb(217, 228, 234);
+  color: rgb(86, 97, 102);
+}
+
+.status_list {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
