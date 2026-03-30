@@ -15,8 +15,8 @@ const App = () => {
     position: "",
     company: "",
     url: "",
-    applicationDate: "",
-    applicationStatus: "",
+    applicationDate: new Date().toISOString().substring(0, 10),
+    applicationStatus: "Applied",
     notes: "",
     source: "",
   });
@@ -67,8 +67,8 @@ const App = () => {
       position: "",
       company: "",
       url: "",
-      applicationDate: "",
-      applicationStatus: "",
+      applicationDate: new Date().toISOString().substring(0, 10),
+      applicationStatus: statusList[0],
       notes: "",
       source: "",
     });
@@ -76,7 +76,7 @@ const App = () => {
 
   const deleteApplication = (id) => {
     if (window.confirm("do you want to delete this application?")) {
-      Applications.delete(id)
+      Applications.remove(id)
         .then(() => {
           setApplications(
             applications.filter((application) => application.id !== id),
@@ -94,6 +94,8 @@ const App = () => {
   };
 
   const updateApplication = (application, id, status) => {
+    if (application.applicationStatus === status) return;
+
     const updatedApplication = {
       ...application,
       applicationStatus: status,
